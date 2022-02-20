@@ -13,6 +13,8 @@ func main() {
 
 	router.GET("/hello", helloHandler)
 
+	router.GET("/books/:id", bookHandler)
+	router.GET("/query", queryHandler)
 	router.Run()
 }
 
@@ -28,4 +30,16 @@ func helloHandler(c *gin.Context) {
 		"content":  "Hello World",
 		"subtitle": "Belajar Golang",
 	})
+}
+
+func bookHandler(c *gin.Context) {
+	id := c.Param("id")
+
+	c.JSON(http.StatusOK, gin.H{"id": id})
+}
+
+func queryHandler(c *gin.Context) {
+	title := c.Query("title")
+	c.JSON(http.StatusOK, gin.H{
+		"title": title})
 }
