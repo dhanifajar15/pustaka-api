@@ -19,15 +19,20 @@ func (s *service) FindAll() ([]Book, error) {
 	return books, err
 }
 
-func (s *service) FindByID(ID int) (Book, error) {
+func (s *service) FindById(ID int) (Book, error) {
 	book, err := s.repository.FindById(ID)
 	return book, err
 }
 func (s *service) Create(bookRequest BookRequest) (Book, error) {
 	price, err := bookRequest.Price.Int64()
+	rating, err := bookRequest.Rating.Int64()
+	discount, err := bookRequest.Discount.Int64()
 	book := Book{
-		Title: bookRequest.Title,
-		Price: int(price),
+		Title:       bookRequest.Title,
+		Price:       int(price),
+		Description: bookRequest.Description,
+		Rating:      int(rating),
+		Discount:    int(discount),
 	}
 	newBook, err := s.repository.Create(book)
 	return newBook, err
