@@ -20,6 +20,7 @@ func main() {
 	db.AutoMigrate(&book.Book{})
 
 	bookRepository := book.NewRepository(db)
+	bookService := book.NewService(bookRepository)
 
 	////FindAll
 	//books, err := bookRepository.FindAll()
@@ -34,15 +35,13 @@ func main() {
 	//fmt.Println("Title :", book.Title)
 
 	//Create book
-	book := book.Book{
-		Title:       "$1000 Startup",
-		Description: "Good Book",
-		Price:       50000,
-		Rating:      5,
-		Discount:    0,
+	bookRequest := book.BookRequest{
+		Title: "Gundam",
+		Price: "100000",
 	}
 
-	bookRepository.Create(book)
+	bookService.Create(bookRequest)
+	//bookRepository.Create(book)
 
 	v1 := router.Group("/v1")
 
