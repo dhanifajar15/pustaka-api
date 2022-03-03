@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -20,6 +21,20 @@ func main() {
 	db.AutoMigrate(&book.Book{})
 	//CRUD
 
+	book := book.Book{}
+	book.Title = "Atomic Habits"
+	book.Price = 12000
+	book.Discount = 10
+	book.Rating = 12
+	book.Description = "Buku tentang membangun kebiasaan baik dan menghilangkan kebiasaan buruk"
+
+	err = db.Create(&book).Error
+
+	if err != nil {
+		fmt.Println("===================")
+		fmt.Println("Error Creating Book")
+		fmt.Println("===================")
+	}
 	v1 := router.Group("/v1")
 
 	v1.GET("/", handler.RootHandler)
