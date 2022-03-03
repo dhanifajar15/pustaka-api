@@ -3,7 +3,7 @@ package book
 import "time"
 
 type Book struct {
-	Id          int
+	ID          int
 	Title       string
 	Description string
 	Price       int

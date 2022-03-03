@@ -24,27 +24,6 @@ func main() {
 	bookService := book.NewService(bookRepository)
 	bookHandler := handler.NewBookHandler(bookService)
 
-	////FindAll
-	//books, err := bookRepository.FindAll()
-	//
-	//
-	//for _, book := range books {
-	//	fmt.Println("Title :", book.Title)
-	//}
-
-	//book, err := bookRepository.FindById(3)
-	//
-	//fmt.Println("Title :", book.Title)
-
-	//Create book
-	//bookRequest := book.BookRequest{
-	//	Title: "Gundam",
-	//	Price: "100000",
-	//}
-
-	//bookService.Create(bookRequest)
-	//bookRepository.Create(book)
-
 	v1 := router.Group("/v1")
 
 	v1.GET("/books", bookHandler.GetBooks)
