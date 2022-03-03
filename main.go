@@ -76,13 +76,23 @@ func main() {
 
 	}
 
-	book.Title = "Man Tiger (Revision Date)"
-	db.Save(&book)
+	//// save
+	//book.Title = "Man Tiger (Revision Date)"
+	//db.Save(&book)
 
-	err = db.Save(&book).Error
+	//
+	//err = db.Save(&book).Error
+	//if err != nil {
+	//	fmt.Println("Error update data")
+	//}
+
+	//delete data
+
+	err = db.Delete(&book).Error
 	if err != nil {
-		fmt.Println("Error update data")
+		fmt.Println("Error delete data")
 	}
+
 	v1 := router.Group("/v1")
 
 	v1.GET("/", handler.RootHandler)
