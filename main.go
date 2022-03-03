@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -19,79 +18,31 @@ func main() {
 		log.Fatal("Database connection error")
 	}
 	db.AutoMigrate(&book.Book{})
-	//CRUD
 
-	//book := book.Book{}
-	//book.Title = "Atomic Habits"
-	//book.Price = 12000
-	//book.Discount = 10
-	//book.Rating = 12
-	//book.Description = "Buku tentang membangun kebiasaan baik dan menghilangkan kebiasaan buruk"
+	bookRepository := book.NewRepository(db)
 
-	//err = db.Create(&book).Error
-
-	//if err != nil {
-	//	fmt.Println("===================")
-	//	fmt.Println("Error Creating Book")
-	//	fmt.Println("===================")
-	//}
-
-	//var book book.Book
-	//err = db.First(&book).Error
-
-	//select first record
-	//err = db.Debug().First(&book).Error
-
-	//select last record
-
-	//err = db.Debug().Last(&book).Error
-
-	//var books []book.Book
+	////FindAll
+	//books, err := bookRepository.FindAll()
 	//
-	////find
-	////err = db.Debug().Find(&books).Error
-	//err = db.Debug().Where("rating = ?", 5).Find(&books).Error
-	//if err != nil {
-	//	fmt.Println("===================")
-	//	fmt.Println("Error finding book record")
-	//	fmt.Println("===================")
-	//}
 	//
-	//for _, b := range books {
-	//	fmt.Println("Title : ", b.Title)
-	//	fmt.Println("book object %v", b)
+	//for _, book := range books {
+	//	fmt.Println("Title :", book.Title)
 	//}
 
-	//fmt.Println("Title: ", book.Title)
-	//fmt.Println("book object %v", book)
+	//book, err := bookRepository.FindById(3)
+	//
+	//fmt.Println("Title :", book.Title)
 
-	//update data
-
-	var book book.Book
-
-	err = db.Debug().Where("id", 1).First(&book).Error
-
-	if err != nil {
-		fmt.Println("Error finding book record")
-
+	//Create book
+	book := book.Book{
+		Title:       "$1000 Startup",
+		Description: "Good Book",
+		Price:       50000,
+		Rating:      5,
+		Discount:    0,
 	}
 
-	//// save
-	//book.Title = "Man Tiger (Revision Date)"
-	//db.Save(&book)
-
-	//
-	//err = db.Save(&book).Error
-	//if err != nil {
-	//	fmt.Println("Error update data")
-	//}
-
-	//delete data
-
-	err = db.Delete(&book).Error
-	if err != nil {
-		fmt.Println("Error delete data")
-	}
+	bookRepository.Create(book)
 
 	v1 := router.Group("/v1")
 
